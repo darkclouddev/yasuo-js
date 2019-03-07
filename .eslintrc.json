@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb-base", "prettier", "plugin:node/recommended", "plugin:promise/recommended"],
+  "plugins": ["prettier", "promise"],
+  "rules": {
+    "strict": 0,
+    "no-underscore-dangle": 0,
+    "import/imports-first": ["error", "absolute-first"],
+    "import/newline-after-import": "error",
+    "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]gnored" }],
+    "node/no-unpublished-require": false
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true
+  }
+}
