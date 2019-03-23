@@ -12,8 +12,13 @@ function readJson(filePath) {
 };
 
 const announcePhrases = readJson('./data/announce.json');
+logger.log(`Loaded ${announcePhrases.length} announce phrase(s)`);
+
 const normalPhrases = readJson('./data/normal.json');
+logger.log(`Loaded ${normalPhrases.length} normal phrase(s)`);
+
 const replyPhrases = readJson('./data/reply.json');
+logger.log(`Loaded ${replyPhrases.length} reply phrase(s)`);
 
 // todo store timestamps in file to avoid being reset on restarts
 let lastNormalTimestamp = 0;
