@@ -140,7 +140,7 @@ function handleCommand(text) {
 
 client.once('ready', () => {
     logger.log(`Connected as ${client.user.username}.`);
-    client.user.setActivity("нытьё из леса", "LISTENING");
+    client.user.setActivity("нытьё из леса", { type: "LISTENING" });
 });
 
 client.on('message', (msg = {}) => {
