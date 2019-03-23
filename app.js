@@ -37,7 +37,7 @@ function getChatChannel() {
 }
 
 function getRandomAnnouncePhrase() {
-    return announcePhrases[Math.floor(Math.random() * announcePhrases.length-1)];
+    return announcePhrases[Math.floor(Math.random() * announcePhrases.length)];
 }
 
 function announce() {
@@ -69,7 +69,7 @@ function canPostNormal() {
 }
 
 function getRandomNormalPhrase() {
-    return normalPhrases[Math.floor(Math.random() * normalPhrases.length-1)];
+    return normalPhrases[Math.floor(Math.random() * normalPhrases.length)];
 }
 
 /**
@@ -101,7 +101,7 @@ function canPostReply() {
 }
 
 function getRandomReplyPhrase() {
-    return replyPhrases[Math.floor(Math.random() * replyPhrases.length-1)];
+    return replyPhrases[Math.floor(Math.random() * replyPhrases.length)];
 }
 
 /**
