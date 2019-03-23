@@ -20,7 +20,7 @@ logger.log(`Loaded ${normalPhrases.length} normal phrase(s)`);
 const replyPhrases = readJson('./data/reply.json');
 logger.log(`Loaded ${replyPhrases.length} reply phrase(s)`);
 
-// todo store timestamps in file to avoid being reset on restarts
+// TODO: store timestamps in file to avoid being reset on restarts
 let lastNormalTimestamp = 0;
 let lastReplyTimestamp = 0;
 
@@ -44,7 +44,9 @@ function announce() {
     const channel = getChatChannel();
 
     if (!channel)
+    {
         return;
+    }
     
     const phrase = getRandomAnnouncePhrase();
     channel.send(phrase);
@@ -58,7 +60,9 @@ function getCurrentTimestamp() {
 
 function canPostNormal() {
     if (lastNormalTimestamp === 0)
+    {
         return true;
+    }
 
     const diff = getCurrentTimestamp - lastNormalTimestamp;
     return diff > config.normalCooldownSeconds;
@@ -76,7 +80,9 @@ function handleNormal(userId) {
     const channel = getChatChannel();
 
     if (!channel || !canPostNormal())
+    {
         return;
+    }
 
     lastNormalTimestamp = getCurrentTimestamp();
 
@@ -86,7 +92,9 @@ function handleNormal(userId) {
 
 function canPostReply() {
     if (lastReplyTimestamp === 0)
+    {
         return true;
+    }
 
     const diff = getCurrentTimestamp - lastReplyTimestamp;
     return diff > config.replyCooldownSeconds;
@@ -104,7 +112,9 @@ function handleReply(userId) {
     const channel = getChatChannel();
 
     if (!channel || !canPostReply())
+    {
         return;
+    }
 
     lastReplyTimestamp = getCurrentTimestamp();
 
@@ -128,26 +138,28 @@ function handleCommand(text) {
     channel.send(text);
 }
 
-client.login(config.token);
-
 client.once('ready', () => {
     logger.log(`Connected as ${client.user.username}.`);
     client.user.setActivity("нытьё из леса", "LISTENING");
 });
 
-client.on('message', (msg) => {
-    if (msg.author.bot)
+client.on('message', (msg = {}) => {
+    
+    if (!msg || !msg.author || !msg.channel || !!msg.author.bot)
+    {
         return;
+    }
 
-    const isCommandChannel = msg.channel.id === config.sayChannelId;
-    const isChatChannel = msg.channel.id === config.chatChannelId;
     const hasSayPrefix = msg.content.startsWith(config.prefix);
+    const isCommandChannel = msg.channel.id === config.sayChannelId;
 
     if (hasSayPrefix && isCommandChannel)
     {
         handleCommand(msg.content.substring(5));
         return;
     }
+
+    const isChatChannel = msg.channel.id === config.chatChannelId;
 
     if (isChatChannel && !hasSayPrefix)
     {
@@ -158,3 +170,5 @@ client.on('message', (msg) => {
             handleNormal(msg.author.id);
     }
 });
+
+client.login(config.token);
