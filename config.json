@@ -1,0 +1,9 @@
+{
+    "token": "",
+    "prefix": "%say",
+    "chatChannelId": "",
+    "sayChannelId": "",
+    "announceCooldownSeconds": 1800,
+    "normalCooldownSeconds": 3600,
+    "replyCooldownSeconds": 900
+}
