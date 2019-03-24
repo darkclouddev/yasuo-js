@@ -144,18 +144,23 @@ client.once('ready', () => {
 });
 
 client.on('message', (msg = {}) => {
+
+    const {
+        author,
+        channel,
+        content
+    } = msg;
     
-    if (!msg || !msg.author || !msg.channel || !!msg.author.bot)
-    {
+    if (!author || !channel || !!author.bot) {
         return;
     }
 
-    const hasSayPrefix = msg.content.startsWith(config.prefix);
+    const contentString = content || '';
+    const hasSayPrefix = contentString.startsWith(config.prefix);
     const isCommandChannel = msg.channel.id === config.sayChannelId;
 
     if (hasSayPrefix && isCommandChannel)
-    {
-        handleCommand(msg.content.substring(5));
+        handleCommand(contentString.substring(5)); // TODO: will be replaced with commands library soon
         return;
     }
 
@@ -164,7 +169,7 @@ client.on('message', (msg = {}) => {
     if (isChatChannel && !hasSayPrefix)
     {
         // if has @Yasuo
-        if (msg.content.startsWith(`<@${client.user.id}>`))
+        if (contentString.startsWith(`<@${client.user.id}>`))
             handleReply(msg.author.id);
         else
             handleNormal(msg.author.id);
