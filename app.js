@@ -27,8 +27,7 @@ let lastReplyTimestamp = 0;
 function getChatChannel() {
     const channel = client.channels.get(config.chatChannelId);
 
-    if (!channel)
-    {
+    if (!channel) {
         logger.log(`Failed to get channed #${config.chatChannelId}.`);
         return null;
     }
@@ -43,8 +42,7 @@ function getRandomAnnouncePhrase() {
 function announce() {
     const channel = getChatChannel();
 
-    if (!channel)
-    {
+    if (!channel) {
         return;
     }
     
@@ -59,8 +57,7 @@ function getCurrentTimestamp() {
 }
 
 function canPostNormal() {
-    if (lastNormalTimestamp === 0)
-    {
+    if (lastNormalTimestamp === 0) {
         return true;
     }
 
@@ -79,8 +76,7 @@ function getRandomNormalPhrase() {
 function handleNormal(userId) {
     const channel = getChatChannel();
 
-    if (!channel || !canPostNormal())
-    {
+    if (!channel || !canPostNormal()) {
         return;
     }
 
@@ -91,8 +87,7 @@ function handleNormal(userId) {
 }
 
 function canPostReply() {
-    if (lastReplyTimestamp === 0)
-    {
+    if (lastReplyTimestamp === 0) {
         return true;
     }
 
@@ -111,8 +106,7 @@ function getRandomReplyPhrase() {
 function handleReply(userId) {
     const channel = getChatChannel();
 
-    if (!channel || !canPostReply())
-    {
+    if (!channel || !canPostReply()) {
         return;
     }
 
@@ -129,8 +123,7 @@ function handleReply(userId) {
 function handleCommand(text) {
     const channel = client.channels.get(config.chatChannelId);
 
-    if (!channel)
-    {
+    if (!channel) {
         logger.log(`Failed to get channel #${config.chatChannelId}.`);
         return;
     }
@@ -159,15 +152,14 @@ client.on('message', (msg = {}) => {
     const hasSayPrefix = contentString.startsWith(config.prefix);
     const isCommandChannel = msg.channel.id === config.sayChannelId;
 
-    if (hasSayPrefix && isCommandChannel)
+    if (hasSayPrefix && isCommandChannel) {
         handleCommand(contentString.substring(5)); // TODO: will be replaced with commands library soon
         return;
     }
 
     const isChatChannel = msg.channel.id === config.chatChannelId;
 
-    if (isChatChannel && !hasSayPrefix)
-    {
+    if (isChatChannel && !hasSayPrefix) {
         // if has @Yasuo
         if (contentString.startsWith(`<@${client.user.id}>`))
             handleReply(msg.author.id);
