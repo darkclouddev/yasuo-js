@@ -28,7 +28,7 @@ function getChatChannel() {
     const channel = client.channels.get(config.chatChannelId);
 
     if (!channel) {
-        logger.log(`Failed to get channed #${config.chatChannelId}.`);
+        logger.log(`Failed to get channel #${config.chatChannelId}.`);
         return null;
     }
 
